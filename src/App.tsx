@@ -2,25 +2,36 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface CommonProps {
+  theme: string
 }
+
+class App extends React.Component {
+  render() {
+    return <Toolbar theme="dark" />
+  }
+}
+
+function Toolbar(props: CommonProps) {
+  return(
+    <div>
+      <ThemedButton theme={props.theme} />
+    </div>
+  )
+}
+
+class ThemedButton extends React.Component<CommonProps> {
+  render() {
+    return(
+      <Button theme={this.props.theme} />
+    )
+  }
+}
+
+const Button = (props: CommonProps) => {
+  return(
+  <button>I am a {`${props.theme} button`}</button>
+  )
+} 
 
 export default App;
