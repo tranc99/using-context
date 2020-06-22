@@ -2,28 +2,36 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const ThemeContext = React.createContext('light')
+
 interface CommonProps {
   theme: string
 }
 
-class App extends React.Component {
+class AppWithContext extends React.Component {
   render() {
-    return <Toolbar theme="dark" />
+    return (
+      <ThemeContext.Provider value="dark">
+        <Toolbar />
+      </ThemeContext.Provider>
+    )
   }
 }
 
-function Toolbar(props: CommonProps) {
+function Toolbar() {
   return(
     <div>
-      <ThemedButton theme={props.theme} />
+      <ThemedButton />
     </div>
   )
 }
 
-class ThemedButton extends React.Component<CommonProps> {
+class ThemedButton extends React.Component {
+  static contextType = ThemeContext
+
   render() {
     return(
-      <Button theme={this.props.theme} />
+      <Button theme={this.context} />
     )
   }
 }
@@ -34,4 +42,4 @@ const Button = (props: CommonProps) => {
   )
 } 
 
-export default App;
+export default AppWithContext;
